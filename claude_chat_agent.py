@@ -23,22 +23,23 @@ class ClaudeChatAgent:
     def process_tool_calls(self, tool_calls):
         results = []
         for call in tool_calls:
-            if call.type == 'function':
-                function_name = call.function.name
-                arguments = call.function.arguments
+            if call.type == 'tool_use':
+                tool_name = call.name
+                tool_input = call.input
 
-                if function_name == 'read_txt_file':
-                    file_path = arguments.get('file_path')
+                if tool_name == 'read_txt_file':
+                    file_path = tool_input.get('file_path')
                     result = read_txt_file(file_path)
-                elif function_name == 'read_binary_file':
-                    file_path = arguments.get('file_path')
+                elif tool_name == 'read_binary_file':
+                    file_path = tool_input.get('file_path')
                     result = read_binary_file(file_path)
                 else:
-                    result = f"Unknown function: {function_name}"
+                    result = f"Unknown tool: {tool_name}"
 
                 results.append({
-                    "tool_call_id": call.id,
-                    "output": str(result)
+                    "type": "tool_result",
+                    "tool_use_id": call.id,
+                    "content": str(result)
                 })
         return results
 
@@ -48,16 +49,21 @@ class ClaudeChatAgent:
         if isinstance(claude_response, str):  # Error occurred
             return claude_response
 
-        if claude_response.tool_calls:
-            tool_results = self.process_tool_calls(claude_response.tool_calls)
-            tool_response = self.chat_with_claude("Tool execution results")
-            if isinstance(tool_response, str):  # Error occurred
-                return tool_response
-            self.update_conversation_history(user_input, claude_response.content, tool_results, tool_response.content)
-            return tool_response.content
-        else:
+        if claude_response.content:
+            for content_block in claude_response.content:
+                if content_block.type == 'tool_use':
+                    tool_results = self.process_tool_calls([content_block])
+                    tool_response = self.chat_with_claude({"role": "user", "content": tool_results})
+                    if isinstance(tool_response, str):  # Error occurred
+                        return tool_response
+                    self.update_conversation_history(user_input, claude_response.content, tool_results, tool_response.content)
+                    return tool_response.content
+            
+            # If no tool use, just return the content
             self.update_conversation_history(user_input, claude_response.content)
             return claude_response.content
+        else:
+            return "No response from Claude."
 
     def update_conversation_history(self, user_input, assistant_response, tool_results=None, tool_response=None):
         self.conversation_history.extend([
@@ -66,7 +72,7 @@ class ClaudeChatAgent:
         ])
         if tool_results:
             self.conversation_history.extend([
-                {"role": "user", "tool_results": tool_results},
+                {"role": "user", "content": tool_results},
                 {"role": "assistant", "content": tool_response}
             ])
         # Limit conversation history to last 10 messages to manage token usage
