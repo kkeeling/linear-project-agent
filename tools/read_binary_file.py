@@ -31,21 +31,18 @@ def read_binary_file(file_path):
     except Exception as e:
         return {'error': f"Unexpected error: {str(e)}"}
 
-# Tool definition for Claude
+# Tool Definition
 read_binary_file_tool = {
-    "type": "function",
-    "function": {
-        "name": "read_binary_file",
-        "description": "Read a binary file and return its metadata and base64-encoded content",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "file_path": {
-                    "type": "string",
-                    "description": "The path to the binary file to be read"
-                }
-            },
-            "required": ["file_path"]
-        }
+    "name": "read_binary_file",
+    "description": "Reads a binary file and returns its metadata and base64-encoded content. This tool should be used when you need to access the contents of a binary file, such as an image, audio file, or any non-text file. It provides the file's name, size, type, and the actual content encoded in base64 format. The tool is useful for tasks that require processing or analyzing binary data. Note that this tool does not interpret or modify the file contents; it simply reads and encodes the raw binary data.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "file_path": {
+                "type": "string",
+                "description": "The full path to the binary file to be read, e.g., '/path/to/image.jpg' or 'C:\\Documents\\audio.mp3'"
+            }
+        },
+        "required": ["file_path"]
     }
 }
