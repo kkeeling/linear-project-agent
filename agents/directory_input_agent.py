@@ -11,7 +11,10 @@ class DirectoryInputAgent:
 
         while True:
             directory = input(f"{Fore.CYAN}Please enter the local directory where project files can be found: {Style.RESET_ALL}")
-            if os.path.isdir(directory):
+            if directory.lower() == 'exit':
+                print(f"{Fore.GREEN}Exiting directory input.{Style.RESET_ALL}")
+                break
+            elif os.path.isdir(directory):
                 self.directory = directory
                 print(f"{Fore.GREEN}Directory exists: {directory}{Style.RESET_ALL}")
                 break
