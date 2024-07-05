@@ -25,9 +25,9 @@ def main():
 
     chat_agent = ClaudeChatAgent(api_key, document_data=document_data)
 
-    print(f"{Fore.GREEN}Agent: Welcome to the AI Chat Agent!")
-    print(f"{Fore.GREEN}Agent: You can chat with me or ask about reading files. Just speak naturally!{Style.RESET_ALL}")
-    print(f"{Fore.GREEN}Agent: Type 'exit' to end the chat.{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}Agent: Welcome to the Linear Project Agent!")
+    print(f"{Fore.GREEN}Agent: Would you like me to generate a list of user stories and tasks for you? I will base my work on the files in your directory. [Y/N]{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}Agent: At any time, you can type 'exit' to end the chat.{Style.RESET_ALL}")
 
     while True:
         user_input = input(f"\n{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
