@@ -62,7 +62,7 @@ class ClaudeChatAgent:
         return results
 
     def start(self):
-        user_input = ""
+        user_input = f'Using the context, create a project plan for this project. Derive the project title and project description from the context.'
         claude_response = self.chat_with_claude(user_input)
 
         if isinstance(claude_response, str):  # Error occurred
