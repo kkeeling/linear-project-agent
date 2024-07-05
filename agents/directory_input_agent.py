@@ -5,7 +5,6 @@ from colorama import init, Fore, Style
 class DirectoryInputAgent:
     def __init__(self):
         self.directory = None
-
         self.files_contents = {}
 
     def ask_for_directory(self):
@@ -16,7 +15,6 @@ class DirectoryInputAgent:
             directory = input(f"{Fore.CYAN}Please enter the local directory where project files can be found: {Style.RESET_ALL}")
             if directory.lower() == 'exit':
                 print(f"{Fore.GREEN}Exiting directory input.{Style.RESET_ALL}")
-                self.read_files_in_directory()
                 break
             elif os.path.isdir(directory):
                 self.directory = directory
@@ -33,5 +31,3 @@ class DirectoryInputAgent:
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                     self.files_contents[file_path] = f.read()
-        print(f"{Fore.GREEN}Successfully loaded {len(self.files_contents)} files from the directory.{Style.RESET_ALL}")
-
