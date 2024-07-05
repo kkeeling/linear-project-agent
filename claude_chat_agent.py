@@ -61,7 +61,8 @@ class ClaudeChatAgent:
                 })
         return results
 
-    def chat(self, user_input):
+    def start(self):
+        user_input = ""
         claude_response = self.chat_with_claude(user_input)
 
         if isinstance(claude_response, str):  # Error occurred
