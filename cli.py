@@ -24,9 +24,9 @@ def main():
 
     chat_agent = ClaudeChatAgent(api_key)
 
-    print(f"{Fore.CYAN}Welcome to the AI Chat Agent!")
-    print(f"{Fore.CYAN}You can chat with me or ask about reading files. Just speak naturally!{Style.RESET_ALL}")
-    print(f"{Fore.CYAN}Type 'exit' to end the chat.{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}Agent: Welcome to the AI Chat Agent!")
+    print(f"{Fore.GREEN}Agent: You can chat with me or ask about reading files. Just speak naturally!{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}Agent: Type 'exit' to end the chat.{Style.RESET_ALL}")
 
     while True:
         user_input = input(f"\n{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
