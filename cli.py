@@ -29,6 +29,12 @@ def main():
     print(f"{Fore.GREEN}Agent: Would you like me to generate a list of user stories and tasks for you? I will base my work on the files in your directory. [Y/N]{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Agent: At any time, you can type 'exit' to end the chat.{Style.RESET_ALL}")
 
+    initial_response = input(f"\n{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
+
+    if initial_response.lower() == 'n':
+        print(f"{Fore.GREEN}Agent: Goodbye!{Style.RESET_ALL}")
+        return
+
     while True:
         user_input = input(f"\n{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
 
