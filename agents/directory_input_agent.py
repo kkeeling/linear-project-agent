@@ -23,11 +23,4 @@ class DirectoryInputAgent:
                 break
             else:
                 print(f"{Fore.RED}Error: The directory '{directory}' does not exist. Please try again.{Style.RESET_ALL}")
-        return self.directory
-
-    def read_files_in_directory(self):
-        for root, _, files in os.walk(self.directory):
-            for file in files:
-                file_path = os.path.join(root, file)
-                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    self.files_contents[file_path] = f.read()
+        print(f"{Fore.GREEN}Successfully loaded {len(self.files_contents)} files from the directory.{Style.RESET_ALL}")
