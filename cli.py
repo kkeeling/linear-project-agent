@@ -36,17 +36,18 @@ def main():
         return
 
     while True:
+        with yaspin(Spinners.dots12, text="Thinking...", color="cyan") as spinner:
+            response = chat_agent.start()
+            spinner.ok("✓")
+
+        print(f"{Fore.GREEN}Agent: {response}{Style.RESET_ALL}")
+
         user_input = input(f"\n{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
 
         if user_input.lower() == 'exit':
             print(f"{Fore.GREEN}Agent: Goodbye! It was nice chatting with you.{Style.RESET_ALL}")
             break
 
-        with yaspin(Spinners.dots12, text="Thinking...", color="cyan") as spinner:
-            response = chat_agent.chat(user_input)
-            spinner.ok("✓")
-
-        print(f"{Fore.GREEN}Agent: {response}{Style.RESET_ALL}")
 
 if __name__ == "__main__":
     main()

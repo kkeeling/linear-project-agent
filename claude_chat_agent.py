@@ -67,6 +67,8 @@ class ClaudeChatAgent:
         for path, content in self.document_data.items():
             context += f"## File: {path}\n\n```\n{content}\n```\n\n"
         return context
+
+    def start(self):
         user_input = f'Using the context, create a project plan for this project. Derive the project title and project description from the context.'
         claude_response = self.chat_with_claude(user_input)
 
