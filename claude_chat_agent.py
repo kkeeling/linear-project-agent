@@ -6,6 +6,7 @@ class ClaudeChatAgent:
     def __init__(self, api_key, document_data=None):
         self.document_data = document_data or {}
         self.anthropic = Anthropic(api_key=api_key)
+        self.context = self.create_context()
         self.conversation_history = []
         self.tools = [read_txt_file_tool, read_binary_file_tool]
         self.system_prompt = self.read_system_prompt()
@@ -61,8 +62,12 @@ class ClaudeChatAgent:
                 })
         return results
 
-    def start(self):
-        user_input = f'Using the context, create a project plan for this project. Derive the project title and project description from the context.'
+    def create_context(self):
+        context = ""
+        for path, content in self.document_data.items():
+            context += f"File: {path}\nContent:\n{content}\n\n"
+        return context
+        user_input = f'Using the following context, create a project plan for this project. Derive the project title and project description from the context.\n\n{self.context}'
         claude_response = self.chat_with_claude(user_input)
 
         if isinstance(claude_response, str):  # Error occurred
