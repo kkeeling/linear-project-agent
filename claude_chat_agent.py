@@ -9,6 +9,7 @@ class ClaudeChatAgent:
         self.conversation_history = []
         self.tools = [read_txt_file_tool, read_binary_file_tool]
         self.system_prompt = self.read_system_prompt()
+        self.context = self.get_context()
 
     def read_system_prompt(self):
         message = ""
@@ -61,7 +62,11 @@ class ClaudeChatAgent:
                 })
         return results
 
-    def start(self):
+    def get_context(self):
+        context = ""
+        for path, content in self.document_data.items():
+            context += f"## File: {path}\n\n```\n{content}\n```\n\n"
+        return context
         user_input = f'Using the context, create a project plan for this project. Derive the project title and project description from the context.'
         claude_response = self.chat_with_claude(user_input)
 
