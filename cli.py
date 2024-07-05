@@ -21,8 +21,9 @@ def main():
 
     directory_agent = DirectoryInputAgent()
     directory_agent.ask_for_directory()
+    document_data = directory_agent.files_contents
 
-    chat_agent = ClaudeChatAgent(api_key)
+    chat_agent = ClaudeChatAgent(api_key, document_data=document_data)
 
     print(f"{Fore.GREEN}Agent: Welcome to the AI Chat Agent!")
     print(f"{Fore.GREEN}Agent: You can chat with me or ask about reading files. Just speak naturally!{Style.RESET_ALL}")
