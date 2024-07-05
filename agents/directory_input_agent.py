@@ -32,3 +32,4 @@ class DirectoryInputAgent:
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                     self.files_contents[file_path] = f.read()
+        print(f"{Fore.GREEN}Successfully loaded {len(self.files_contents)} files from the directory.{Style.RESET_ALL}")
