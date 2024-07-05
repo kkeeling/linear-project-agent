@@ -35,6 +35,8 @@ def main():
         print(f"{Fore.GREEN}Agent: Goodbye!{Style.RESET_ALL}")
         return
 
+    user_input = ""
+
     while True:
         with yaspin(Spinners.dots12, text="Thinking...", color="cyan") as spinner:
             response = chat_agent.chat(user_input)
