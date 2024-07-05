@@ -16,6 +16,7 @@ class DirectoryInputAgent:
             directory = input(f"{Fore.CYAN}Please enter the local directory where project files can be found: {Style.RESET_ALL}")
             if directory.lower() == 'exit':
                 print(f"{Fore.GREEN}Exiting directory input.{Style.RESET_ALL}")
+                self.read_files_in_directory()
                 break
             elif os.path.isdir(directory):
                 self.directory = directory
