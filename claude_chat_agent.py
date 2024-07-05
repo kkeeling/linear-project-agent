@@ -11,10 +11,11 @@ class ClaudeChatAgent:
         self.system_prompt = self.read_system_prompt()
 
     def read_system_prompt(self):
+        message = ""
         try:
             if self.document_data:
                 document_summary = "\n".join([f"{path}: {content[:100]}..." for path, content in self.document_data.items()])
-                message = f"{message}\n\nDocuments:\n{document_summary}"
+                message += f"\n\nDocuments:\n{document_summary}"
             with open("system_prompt.md", "r") as file:
                 return file.read().strip()
         except FileNotFoundError:
