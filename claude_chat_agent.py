@@ -7,13 +7,26 @@ class ClaudeChatAgent:
         self.anthropic = Anthropic(api_key=api_key)
         self.conversation_history = []
         self.tools = [read_txt_file_tool, read_binary_file_tool]
+        self.system_prompt = self.read_system_prompt()
+
+    def read_system_prompt(self):
+        try:
+            with open("system_prompt.md", "r") as file:
+                return file.read().strip()
+        except FileNotFoundError:
+            print("Warning: system_prompt.md file not found. Using default system prompt.")
+            return "You are a helpful AI assistant."
 
     def chat_with_claude(self, message):
         try:
             response = self.anthropic.messages.create(
                 model="claude-3-sonnet-20240229",
                 max_tokens=1024,
-                messages=self.conversation_history + [{"role": "user", "content": message}],
+                system=self.system_prompt,
+                messages=[
+                    *self.conversation_history,
+                    {"role": "user", "content": message}
+                ],
                 tools=self.tools
             )
             return response
