@@ -3,7 +3,8 @@ from tools.read_txt_file import read_txt_file, read_txt_file_tool
 from tools.read_binary_file import read_binary_file, read_binary_file_tool
 
 class ClaudeChatAgent:
-    def __init__(self, api_key):
+    def __init__(self, api_key, document_data=None):
+        self.document_data = document_data or {}
         self.anthropic = Anthropic(api_key=api_key)
         self.conversation_history = []
         self.tools = [read_txt_file_tool, read_binary_file_tool]
@@ -11,6 +12,9 @@ class ClaudeChatAgent:
 
     def read_system_prompt(self):
         try:
+            if self.document_data:
+                document_summary = "\n".join([f"{path}: {content[:100]}..." for path, content in self.document_data.items()])
+                message = f"{message}\n\nDocuments:\n{document_summary}"
             with open("system_prompt.md", "r") as file:
                 return file.read().strip()
         except FileNotFoundError:
