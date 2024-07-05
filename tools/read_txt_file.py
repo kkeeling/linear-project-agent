@@ -22,21 +22,18 @@ def read_txt_file(file_path):
     except Exception as e:
         return f"Unexpected error: {str(e)}"
 
-# Tool definition for Claude
+# Tool Definition
 read_txt_file_tool = {
-    "type": "function",
-    "function": {
-        "name": "read_txt_file",
-        "description": "Read the contents of a .txt file",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "file_path": {
-                    "type": "string",
-                    "description": "The path to the .txt file to be read"
-                }
-            },
-            "required": ["file_path"]
-        }
+    "name": "read_txt_file",
+    "description": "Read the contents of a .txt file. This tool opens and reads the specified text file, returning its contents as a string. It should be used when you need to access the content of a specific .txt file. The tool will return an error message if the file doesn't exist, isn't a .txt file, or if there are any issues reading the file.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "file_path": {
+                "type": "string",
+                "description": "The full path to the .txt file to be read, e.g. '/path/to/file.txt'"
+            }
+        },
+        "required": ["file_path"]
     }
 }
