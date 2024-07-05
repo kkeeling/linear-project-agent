@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from claude_chat_agent import ClaudeChatAgent
+from agents.directory_input_agent import DirectoryInputAgent
 from tools.read_txt_file import read_txt_file_tool
 from tools.read_binary_file import read_binary_file_tool
 from colorama import init, Fore, Style
@@ -17,6 +18,9 @@ def main():
     if not api_key:
         print(f"{Fore.RED}Error: ANTHROPIC_API_KEY not found in environment variables.{Style.RESET_ALL}")
         return
+
+    directory_agent = DirectoryInputAgent()
+    directory_agent.ask_for_directory()
 
     chat_agent = ClaudeChatAgent(api_key)
 
