@@ -22,11 +22,11 @@ def main():
         user_input = input("\nYou: ").strip()
 
         if user_input.lower() == 'exit':
-            print("AI: Goodbye! It was nice chatting with you.")
+            print("Agent: Goodbye! It was nice chatting with you.")
             break
 
         response = chat_agent.chat(user_input)
-        print(f"AI: {response}")
+        print(f"Agent: {response}")
 
 if __name__ == "__main__":
     main()
