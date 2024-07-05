@@ -6,7 +6,7 @@ class ClaudeChatAgent:
     def __init__(self, api_key, document_data=None):
         self.document_data = document_data or {}
         self.anthropic = Anthropic(api_key=api_key)
-        self.context = self.create_context()
+        self.context = self.get_context()
         self.conversation_history = []
         self.tools = [read_txt_file_tool, read_binary_file_tool]
         self.system_prompt = self.read_system_prompt()
@@ -62,7 +62,11 @@ class ClaudeChatAgent:
                 })
         return results
 
-    def create_context(self):
+    def get_context(self):
+        context = ""
+        for path, content in self.document_data.items():
+            context += f"## File: {path}\n\n```\n{content}\n```\n\n"
+        return context
         context = ""
         for path, content in self.document_data.items():
             context += f"File: {path}\nContent:\n{content}\n\n"
