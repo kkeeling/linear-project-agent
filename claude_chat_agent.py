@@ -27,7 +27,7 @@ class ClaudeChatAgent:
         try:
             response = self.anthropic.messages.create(
                 model="claude-3-sonnet-20240229",
-                max_tokens=1024,
+                max_tokens=4000,
                 system=self.system_prompt,
                 messages=[
                     *self.conversation_history,
@@ -69,7 +69,13 @@ class ClaudeChatAgent:
         return context
 
     def start(self):
+        # Initiate conversation history with context
+        self.conversation_history.append({"role": "user", "content": self.context})
+        self.conversation_history.append({"role": "assistant", "content": "Thank you for the context."})
         user_input = f'Using the context, create a project plan for this project. Derive the project title and project description from the context.'
+        return self.chat(user_input)
+
+    def chat(self, user_input):
         claude_response = self.chat_with_claude(user_input)
 
         if isinstance(claude_response, str):  # Error occurred

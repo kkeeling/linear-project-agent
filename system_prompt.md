@@ -52,7 +52,7 @@ Your goal is to create a set of user stories that capture the key features and f
 - Task 1
 - Task 2
 
-Remember to think from the perspective of both the end-users and the development team when creating user stories and tasks. Aim for clarity, completeness, and actionability in your output.     
+Remember to think from the perspective of both the end-users and the development team when creating user stories and tasks. Aim for clarity, completeness, and actionability in your output.
 
 # INPUT
 
